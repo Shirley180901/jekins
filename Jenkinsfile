@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Construir Imagen Docker') {
             steps {
-                // Se agrega --network=host para solucionar el congelamiento en npm install
+                // Mantiene la red host para que no se congele
                 sh 'docker build --network=host -t hola-mundo-node:latest .'
             }
         }
@@ -17,12 +17,12 @@ pipeline {
         stage('Ejecutar Contenedor Node.js') {
             steps {
                 sh '''
-                    # Detener y eliminar cualquier contenedor previo
+                    # Detener y eliminar cualquier contenedor previo con este nombre
                     docker stop hola-mundo-node || true
                     docker rm hola-mundo-node || true
 
-                    # Ejecutar el contenedor de la aplicación
-                    docker run -d --name hola-mundo-node -p 3000:3000 hola-mundo-node:latest
+                    # Se cambia el puerto externo a 3050 para evitar el error "port is already allocated"
+                    docker run -d --name hola-mundo-node -p 3050:3000 hola-mundo-node:latest
                 '''
             }
         }
