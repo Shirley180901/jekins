@@ -8,8 +8,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY index.js .
 
-# Instalar dependencias
-RUN npm install
+# SE ELIMINA LA LÍNEA DE NPM INSTALL PORQUE NO SE NECESITA
+# RUN npm install
 
 # Exponer el puerto de la aplicación
 EXPOSE 3000
