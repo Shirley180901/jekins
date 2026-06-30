@@ -9,7 +9,8 @@ pipeline {
     stages {
         stage('Construir Imagen Docker') {
             steps {
-                sh 'docker build -t hola-mundo-node:latest .'
+                // Se agrega --network=host para solucionar el congelamiento en npm install
+                sh 'docker build --network=host -t hola-mundo-node:latest .'
             }
         }
 
